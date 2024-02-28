@@ -5,7 +5,7 @@ import torchvision.transforms as transforms
 import torch
 
 # load the model
-model = torch.load('garbage_classification.pth', map_location=torch.device('cpu'))
+model = torch.load('garbage_classification-01.pth', map_location=torch.device('cpu'))
 model.eval()
 
 # load the labels
@@ -41,8 +41,9 @@ while True:
     # get the class name
     class_name = class_names[predicted]
 
-    # put the class name on the frame
-    cv2.putText(frame, class_name, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+    if class_name != 'background':  # Add this condition to check if something is detected
+        # put the class name on the frame
+        cv2.putText(frame, class_name, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), 3, cv2.LINE_AA)
 
     # convert the frame back to BGR
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
